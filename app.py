@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import joblib
-from PIL import Image
 
 # Load the model
 model = joblib.load("breast_cancer_model.pkl")
@@ -38,13 +37,6 @@ st.markdown(
 # Header
 st.markdown("<div class='title'>OncoPredict: Breast Cancer Awareness and Prediction</div>", unsafe_allow_html=True)
 st.markdown("<div class='subheader'>Empowering Women Through Early Detection</div>", unsafe_allow_html=True)
-
-# Load Awareness Image
-try:
-    awareness_image = Image.open("awareness.jpg")
-    st.image(awareness_image, use_column_width=True)
-except FileNotFoundError:
-    st.warning("Awareness image not found. Please add 'awareness.jpg' to the project folder.")
 
 # Sidebar for User Input
 st.sidebar.header("Enter Tumor Features")
@@ -87,3 +79,4 @@ if st.button("Predict Breast Cancer"):
 
 # Footer
 st.markdown("<br><br><center>Made with 💖 for Breast Cancer Awareness</center>", unsafe_allow_html=True)
+
