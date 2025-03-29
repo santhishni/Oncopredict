@@ -7,7 +7,7 @@ from PIL import Image
 st.set_page_config(page_title="Breast Cancer Prediction", page_icon="🎗", layout="wide")
 
 # Load images
-header_image = Image.open("breastcancer_awareness.jpg")  # Replace with your uploaded image file
+header_image = Image.open("breastcancer_awareness.jpeg")  # Replace with your uploaded image file
 sidebar_image = Image.open("doctor_cares_patient.jpg")  # Replace with your uploaded image file
 
 # Display Header Image
