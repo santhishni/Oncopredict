@@ -1,62 +1,55 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 from PIL import Image
 
-# Set page config
-st.set_page_config(page_title="Breast Cancer Prediction", page_icon="🎗", layout="wide")
+# Set up the Streamlit app
+st.set_page_config(page_title="OncoPredict - Breast Cancer Awareness", layout="wide")
 
-# Load images
-header_image = Image.open("breastcancer_awareness.jpeg")  # Replace with your uploaded image file
-sidebar_image = Image.open("doctor_cares_patient.jpg")  # Replace with your uploaded image file
+# Title of the app
+st.title("OncoPredict: Breast Cancer Awareness and Prediction")
 
-# Display Header Image
-st.image(header_image, use_column_width=True)
+# Load and display images
+col1, col2 = st.columns(2)
 
-# Sidebar
-st.sidebar.image(sidebar_image, use_column_width=True)
-st.sidebar.title("🔬 About the App")
-st.sidebar.info("This AI-powered tool predicts the risk of breast cancer based on medical parameters.")
+with col1:
+    st.header("Breast Cancer Awareness")
+    awareness_image = Image.open("awareness.jpg")
+    st.image(awareness_image, caption="Breast Cancer Awareness", use_column_width=True)
 
-# Title & Subtitle
-st.title("🔍 Breast Cancer Prediction App")
-st.markdown("### Providing AI-driven analysis for early detection")
+with col2:
+    st.header("Doctor Caring for Patient")
+    doctor_image = Image.open("doctor_cares.jpg")
+    st.image(doctor_image, caption="Doctor Cares for Patient", use_column_width=True)
 
-# Form for User Input
-with st.form("input_form"):
-    st.subheader("📝 Enter Tumor Details")
-    radius = st.number_input("Radius of Tumor (mm):", min_value=1.0, max_value=50.0, value=10.0, step=0.1)
-    texture = st.number_input("Texture Score:", min_value=1.0, max_value=50.0, value=15.0, step=0.1)
-    perimeter = st.number_input("Perimeter of Tumor (mm):", min_value=1.0, max_value=100.0, value=30.0, step=0.1)
-    area = st.number_input("Tumor Area (mm²):", min_value=50.0, max_value=3000.0, value=500.0, step=1.0)
-    smoothness = st.number_input("Smoothness Score:", min_value=0.1, max_value=1.0, value=0.5, step=0.01)
-    
-    submit = st.form_submit_button("🔍 Predict")
+# Description
+st.write("""
+### About OncoPredict
+OncoPredict is an AI-driven tool aimed at raising awareness and providing early detection insights into breast cancer.
+Our goal is to leverage technology to assist in early detection and improve patient outcomes.
+""")
 
-# Prediction Logic (Dummy Model for Now)
-def predict_cancer(radius, texture, perimeter, area, smoothness):
-    risk_score = (radius * 0.3) + (texture * 0.2) + (perimeter * 0.1) + (area * 0.05) + (smoothness * 10)
-    if risk_score > 50:
-        return "High Risk", "🔴 High"
-    elif risk_score > 30:
-        return "Moderate Risk", "🟡 Moderate"
+# Add prediction input fields
+st.subheader("Breast Cancer Prediction")
+
+radius_mean = st.number_input("Radius Mean", min_value=0.0, format="%.2f")
+texture_mean = st.number_input("Texture Mean", min_value=0.0, format="%.2f")
+perimeter_mean = st.number_input("Perimeter Mean", min_value=0.0, format="%.2f")
+area_mean = st.number_input("Area Mean", min_value=0.0, format="%.2f")
+smoothness_mean = st.number_input("Smoothness Mean", min_value=0.0, format="%.4f")
+
+# Predict button
+if st.button("Predict"):
+    # Dummy prediction logic (replace with AI model later)
+    if radius_mean > 15 and texture_mean > 20:
+        st.error("High risk of breast cancer. Please consult a doctor.")
     else:
-        return "Low Risk", "🟢 Low"
+        st.success("Low risk detected. Maintain regular checkups.")
 
-# Display Prediction
-if submit:
-    result_text, risk_level = predict_cancer(radius, texture, perimeter, area, smoothness)
-    
-    st.markdown("---")
-    st.subheader("🧪 Prediction Result")
-    st.markdown(f"## {risk_level}")
-    st.info(f"Based on the provided details, the model predicts: **{result_text}**")
+st.sidebar.header("More Information")
+st.sidebar.info("Visit [WHO](https://www.who.int/) for more breast cancer awareness and resources.")
 
-    # Display a Bar Chart Visualization
-    risk_data = pd.DataFrame({
-        "Factor": ["Radius", "Texture", "Perimeter", "Area", "Smoothness"],
-        "Impact Score": [radius * 0.3, texture * 0.2, perimeter * 0.1, area * 0.05, smoothness * 10]
-    })
-    st.bar_chart(risk_data.set_index("Factor"))
+# Footer
+st.markdown("---")
+st.markdown("Developed by [Your Name or Team Name] - 2025")
+
 
 
